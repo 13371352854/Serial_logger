@@ -151,4 +151,5 @@ if __name__ == '__main__':
             while True:
                 time.sleep(1)
         except KeyboardInterrupt:
-            sys.exit('Software exit by keyboard')
+            sys.exit('======= Software exit by keyboard =======')
+
