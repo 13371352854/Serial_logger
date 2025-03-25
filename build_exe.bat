@@ -12,7 +12,7 @@ echo Failed to activate virtual environment.
 exit /b %errorlevel%
 )
 
-pyinstaller -F main.py --name=Serial_logger
+pyinstaller -F -i image.ico main.py --name=Serial_logger
 
 pause
 

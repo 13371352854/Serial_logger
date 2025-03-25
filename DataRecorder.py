@@ -1,7 +1,7 @@
+import csv
 import os
 import socket
 import time
-import csv
 
 
 class DataRecorder:

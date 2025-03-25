@@ -1,11 +1,13 @@
-import serial.tools.list_ports
 import argparse
-import sys
-import time
-import MySerial
-import DataRecorder
-import threading
 import queue
+import sys
+import threading
+import time
+
+import serial.tools.list_ports
+
+import DataRecorder
+import MySerial
 
 VERSION = "1.0.0"
 
@@ -59,7 +61,7 @@ class my_data_recorder_thread(threading.Thread):
                     byte_pair = data[i:i + 1]
                     if len(byte_pair) == 1:
                         result_data.append(int.from_bytes(byte_pair))
-                formatted_result = [f"{num:4}"for num in result_data]
+                formatted_result = [f"{num:4}" for num in result_data]
                 current_time = time.strftime("%H:%M:%S",time.localtime())
                 print(f"{current_time}-->{formatted_result}")
                 my_recorder.record_data(result_data)
@@ -68,9 +70,9 @@ class my_data_recorder_thread(threading.Thread):
                     data = data[1:-1]
                     result_data = []
                     for i in range(0,len(data),2):
-                        byte_pair = data[i:i+2]
+                        byte_pair = data[i:i + 2]
                         if len(byte_pair) == 2:
-                            result_data.append(int.from_bytes(byte_pair,byteorder='big'))
+                            result_data.append(int.from_bytes(byte_pair,byteorder = 'big'))
                     formatted_result = [f"{num:6}" for num in result_data]
                     current_time = time.strftime("%H:%M:%S",time.localtime())
                     print(f"{current_time}-->{formatted_result}")
@@ -80,9 +82,9 @@ class my_data_recorder_thread(threading.Thread):
                     data = data[1:-1]
                     result_data = []
                     for i in range(0,len(data),4):
-                        byte_pair = data[i:i+4]
+                        byte_pair = data[i:i + 4]
                         if len(byte_pair) == 4:
-                            result_data.append(int.from_bytes(byte_pair,byteorder='big'))
+                            result_data.append(int.from_bytes(byte_pair,byteorder = 'big'))
                     formatted_result = [f"{num:12}" for num in result_data]
                     current_time = time.strftime("%H:%M:%S",time.localtime())
                     print(f"{current_time}-->{formatted_result}")
@@ -141,10 +143,10 @@ if __name__ == '__main__':
             sys.exit('Could not connect to serial port')
         my_recorder = DataRecorder.DataRecorder()
         my_recorder.add_new_file(args.file)
-        data_thread = my_data_recorder_thread(device=my_recorder,mode=serial_format)
+        data_thread = my_data_recorder_thread(device = my_recorder,mode = serial_format)
         data_thread.daemon = True
         data_thread.start()
-        serial_thread = my_serial_thread(device=my_serial)
+        serial_thread = my_serial_thread(device = my_serial)
         serial_thread.daemon = True
         serial_thread.start()
         try:
@@ -152,4 +154,3 @@ if __name__ == '__main__':
                 time.sleep(1)
         except KeyboardInterrupt:
             sys.exit('======= Software exit by keyboard =======')
-
