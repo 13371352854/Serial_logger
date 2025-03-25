@@ -59,8 +59,9 @@ class my_data_recorder_thread(threading.Thread):
                     byte_pair = data[i:i + 1]
                     if len(byte_pair) == 1:
                         result_data.append(int.from_bytes(byte_pair))
+                formatted_result = [f"{num:4}"for num in result_data]
                 current_time = time.strftime("%H:%M:%S",time.localtime())
-                print(f"{current_time}-->{result_data}")
+                print(f"{current_time}-->{formatted_result}")
                 my_recorder.record_data(result_data)
             elif self.mode == 2:
                 if data[0] == 0xff and data[-1] == ord('\n'):
@@ -70,8 +71,9 @@ class my_data_recorder_thread(threading.Thread):
                         byte_pair = data[i:i+2]
                         if len(byte_pair) == 2:
                             result_data.append(int.from_bytes(byte_pair,byteorder='big'))
+                    formatted_result = [f"{num:6}" for num in result_data]
                     current_time = time.strftime("%H:%M:%S",time.localtime())
-                    print(f"{current_time}-->{result_data}")
+                    print(f"{current_time}-->{formatted_result}")
                     my_recorder.record_data(result_data)
             elif self.mode == 4:
                 if data[0] == 0xff and data[-1] == ord('\n'):
@@ -81,8 +83,9 @@ class my_data_recorder_thread(threading.Thread):
                         byte_pair = data[i:i+4]
                         if len(byte_pair) == 4:
                             result_data.append(int.from_bytes(byte_pair,byteorder='big'))
+                    formatted_result = [f"{num:12}" for num in result_data]
                     current_time = time.strftime("%H:%M:%S",time.localtime())
-                    print(f"{current_time}-->{result_data}")
+                    print(f"{current_time}-->{formatted_result}")
                     my_recorder.record_data(result_data)
 
     def stop_thread(self):
