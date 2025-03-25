@@ -36,7 +36,12 @@ class DataRecorder:
             csv_writer = csv.writer(f)
             self.seq_num = self.seq_num + 1
             current_time = time.strftime("%H%M%S",time.localtime())
-            data_list_buffer = [self.seq_num,current_time] + [data_list]
+            if isinstance(data_list,str):
+                data_list_buffer = [self.seq_num,current_time] + [data_list]
+            elif isinstance(data_list,list):
+                data_list_buffer = [self.seq_num,current_time] + data_list
+            else:
+                data_list_buffer = [self.seq_num,current_time] + [data_list]
             csv_writer.writerow(data_list_buffer)
 
     def get_file_date(self):
